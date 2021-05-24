@@ -1,0 +1,14 @@
+{% autoescape off %}
+Hi {{ username }},
+
+Please click on the link below to confirm your email:
+{{ host }}{{ url }}
+
+
+
+** Note: Don't reply to this email.
+
+
+Thank you,
+REGALAPP
+{% endautoescape %}
