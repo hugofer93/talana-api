@@ -73,19 +73,16 @@ MIDDLEWARE += [] if not DEBUG else [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_PARSER_CLASSES': (
+    'DEFAULT_PARSER_CLASSES': [
         'drf_ujson.parsers.UJSONParser',
         'rest_framework.parsers.FileUploadParser',
-    ),
+    ],
     'DEFAULT_RENDERER_CLASSES': [
         'drf_ujson.renderers.UJSONRenderer',
     ],
     'DEFAULT_PAGINATION_CLASS':
         'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 15,
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-    ],
     'DEFAULT_VERSIONING_CLASS':
         'rest_framework.versioning.NamespaceVersioning',
     'DEFAULT_VERSION': 'api-v1',

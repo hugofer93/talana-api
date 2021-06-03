@@ -19,9 +19,6 @@ class CreateUser(ListCreateAPIView):
     permission_classes = (AllowAny, )
     serializer_class = CreateUserSerializer
 
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
-
     def send_mail(self, serializer: Serializer) -> None:
         """Send mail to user in background with Celery.
 

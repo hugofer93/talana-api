@@ -13,5 +13,5 @@ def get_random_value_in_list(id_list: List[int]) -> int:
         int: Value in list (ID).
     """
     range_ = default_rng()
-    index = range_.choice(id_list, 1, replace=True)[0]
-    return index
+    id = range_.choice(id_list, 1, replace=True)[0]
+    return id

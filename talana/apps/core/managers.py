@@ -22,7 +22,7 @@ class UserManager(DjangoUserManager):
         """Get an active user.
 
         Args:
-            user_id (int): User id
+            user_id (int): User id.
 
         Returns:
             UserModel: User instance.
@@ -71,9 +71,7 @@ class UserManager(DjangoUserManager):
         verified_users = self.get_verified_users()
         verified_users_id = verified_users.values_list('id', flat=True)
         winning_user_id = get_random_value_in_list(list(verified_users_id))
-        print(f'winning_user_id: {winning_user_id}')
         winner_user = verified_users.get(id=winning_user_id)
-        print(f'user: {winner_user}')
         winner_user.is_winner = True
         winner_user.save()
         return winner_user
