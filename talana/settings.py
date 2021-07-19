@@ -122,10 +122,20 @@ WSGI_APPLICATION = 'talana.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT', cast=int, default='5432'),
+        'NAME': config('DB_NAME', default='talana_db'),
+        'USER': config('DB_USER', default='talana'),
+        'PASSWORD': config('DB_PASSWORD'),
     }
 }
+
+
+# Celery
+# https://docs.celeryproject.org/en/stable/getting-started/backends-and-brokers/index.html
+
+CELERY_BROKER_URL = config('CELERY_BROKER_URL', default='amqp://rabbitmq:5672/')
 
 
 # Password validation

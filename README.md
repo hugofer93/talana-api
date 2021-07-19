@@ -12,7 +12,6 @@ Problem Statement proposed by [TALANA](https://talana.com/)
 
 * [Overview](#talana-api)
 * [Main Dependencies](#Main-Dependencies)
-* [Python Configuration](#Python-Configuration)
 * [Project Configuration](#Project-Configuration)
 
 
@@ -21,33 +20,17 @@ Problem Statement proposed by [TALANA](https://talana.com/)
     Python              ~3.8
     Django              ~3.2
     djangorestframework ~3.12
+    PostgreSQL          ~12.7
+    RabbitMQ            ~3.8
     Celery              ~5.1
 
 For more details, see the [pyproject.toml file](pyproject.toml).
 
-## Python Configuration
+## Docker Configuration
 
-- [Install Pyenv](https://github.com/pyenv/pyenv-installer)
-- Install Python ~3.8:
+- [Install Docker](https://docs.docker.com/engine/install/)
 
-    If you want to see **all available versions of Python**:
-
-        $ pyenv install --list
-
-    Now install the version you want of Python 3.8. e.g.:
-
-        $ pyenv install 3.8.10
-
-- [Install Poetry](https://python-poetry.org/docs/#installation)
-
-- Configure the creation of the **virtual environment within the project:**
-
-        $ vim $HOME/.bashrc
-
-    **Add these lines to the end of the file:**
-
-        # Poetry
-        export POETRY_VIRTUALENVS_IN_PROJECT=1
+- [Install Docker Compose](https://docs.docker.com/compose/install/#install-compose)
 
 ## Project Configuration
 
@@ -59,34 +42,34 @@ For more details, see the [pyproject.toml file](pyproject.toml).
 
         $ cp .env.sample .env
 
-- **Activate the installed Python 3.8 version**. e.g.:
+    **Production or Staging Environment**:
 
-        $ pyenv shell 3.8.10
+    - Set `DEBUG=false`
 
-- Install dependencies **in Production environment:**
+    **Develop Environment**:
 
-        $ poetry install --no-dev
+    - Set `DEBUG=true`
 
-    **For Development environment:**
+- Up Services with docker-compose:
 
-        $ poetry install
+    **Production or Staging Environment**:
 
-- Activate virtual environment (optional):
+        $ docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 
-        $ poetry shell
+    **Develop Environment**:
 
-    Alternatively you can run without activating the virtual environment:
+        $ docker-compose up -d
 
-        $ poetry run <commands described below>
+- Execute commands in container (e.g.):
 
-    e.g.:
+        $ docker exec -it talana_api poetry run python manage.py createsuperuser
 
-        $ poetry run python file.py
+- Show containers logs:
 
-- If you are in development environment:
+    For Django Project:
 
-        $ python manage.py runserver
+        $ docker-compose logs -f api
 
-    In another terminal, run the celery worker:
+    For Celery:
 
-        $ celery -A talana worker -l INFO
+        $ docker-compose logs -f celery

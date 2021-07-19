@@ -12,6 +12,8 @@ djangorestframework = "~3.12"
 drf-ujson2 = "~1.6"
 celery = "~5.1"
 numpy = "~1.20"
+psycopg2 = "~2.9"
+uWSGI = "~2.0"
 
 [tool.poetry.dev-dependencies]
 pylint = "~2.8"

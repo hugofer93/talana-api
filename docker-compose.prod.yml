@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  api:
+    environment:
+      DEBUG: "false"
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - "staticfiles:/opt/talana/staticfiles/"
+    command: >
+      sh -c "poetry run python manage.py makemigrations --noinput
+      && poetry run python manage.py migrate --noinput
+      && poetry run python manage.py collectstatic --noinput
+      && poetry run uwsgi --ini utility/uwsgi.ini"
+    restart: "always"
+
+  celery:
+    environment:
+      DEBUG: "false"
+    volumes:
+      - "./utility/celeryd.sh:/etc/init.d/celeryd"
+      - "./utility/celeryd:/etc/default/celeryd"
+    command: >
+      sh -c "chmod +x /etc/init.d/celeryd
+      && /etc/init.d/celeryd restart
+      && tail -f /dev/null"
+    restart: "always"
+
+  nginx:
+    container_name: "talana_nginx"
+    image: "nginx:1.20-alpine"
+    expose:
+      - "80"
+    ports:
+      - "80:80"
+    volumes:
+      - "staticfiles:/usr/share/nginx/html/staticfiles:ro"
+      - "./utility/nginx.conf:/etc/nginx/conf.d/default.conf:ro"
+    depends_on:
+      - "api"
+    restart: "always"
+
+volumes:
+  staticfiles: {}
