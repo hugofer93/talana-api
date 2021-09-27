@@ -48,6 +48,7 @@ DEBUG_APPS = [] if not DEBUG else [
 
 THIRD_PARTY_APPS = [
     'rest_framework',
+    'drf_spectacular',
 ]
 
 LOCAL_APPS = [
@@ -72,6 +73,9 @@ MIDDLEWARE += [] if not DEBUG else [
     'silk.middleware.SilkyMiddleware',
 ]
 
+
+# https://www.django-rest-framework.org/
+
 REST_FRAMEWORK = {
     'DEFAULT_PARSER_CLASSES': [
         'drf_ujson.parsers.UJSONParser',
@@ -80,6 +84,7 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'drf_ujson.renderers.UJSONRenderer',
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS':
         'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 15,
@@ -95,6 +100,16 @@ if DEBUG:
     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] += [
         'rest_framework.renderers.BrowsableAPIRenderer',
     ]
+
+
+# https://drf-spectacular.readthedocs.io/en/latest/
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Talana API',
+    'DESCRIPTION': 'Talana REST API',
+    'VERSION': '1.0.0',
+}
+
 
 ROOT_URLCONF = 'talana.urls'
 

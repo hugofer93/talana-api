@@ -14,6 +14,7 @@ celery = "~5.1"
 numpy = "~1.20"
 psycopg2 = "~2.9"
 uWSGI = "~2.0"
+drf-spectacular = "~0.19"
 
 [tool.poetry.dev-dependencies]
 pylint = "~2.8"
