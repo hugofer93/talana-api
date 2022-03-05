@@ -10,5 +10,5 @@ Please click on the link below to confirm your email:
 
 
 Thank you,
-REGALAPP
+TALANA
 {% endautoescape %}
